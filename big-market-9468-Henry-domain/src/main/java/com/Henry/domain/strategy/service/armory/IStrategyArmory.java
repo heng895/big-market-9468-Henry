@@ -8,14 +8,9 @@ package com.Henry.domain.strategy.service.armory;
 public interface IStrategyArmory {
     /**
      * 初始化策略计算
+     *
      * @param strategyId 策略id
+     * @return
      */
-    void assembleLotteryStrategy(Long strategyId);
-
-    /**
-     * 获取随机奖品的id
-     * @param strategyId 策略id
-     * @return 奖品id
-     */
-    Integer getRandomAwardId(Long strategyId);
+    boolean assembleLotteryStrategy(Long strategyId);
 }

@@ -1,6 +1,5 @@
 package com.Henry.infrastructure.persistent.dao;
 
-import com.Henry.infrastructure.persistent.po.Award;
 import com.Henry.infrastructure.persistent.po.Strategy;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,6 +11,8 @@ import java.util.List;
  * @Date 2024/3/25
  */
 @Mapper
-public interface IStrategyDAO {
+public interface IStrategyDao {
     List<Strategy> queryStrategyList();
+
+    Strategy queryStrategyByStrategyId(Long strategyId);
 }

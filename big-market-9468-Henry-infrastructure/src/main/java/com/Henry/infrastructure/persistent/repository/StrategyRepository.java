@@ -119,6 +119,21 @@ public class StrategyRepository implements IStrategyRepository {
      * @return 策略信息
      */
     @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    /**
+     * 根据策略ID查询策略信息
+     *
+     * @param strategyId 策略ID
+     * @return 策略信息
+     */
+    @Override
     public StrategyEntity queryStrategyEntityByStrategyId(Long strategyId) {
         // 优先从缓存获取
         String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;

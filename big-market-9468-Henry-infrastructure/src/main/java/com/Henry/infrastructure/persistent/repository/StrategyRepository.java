@@ -3,6 +3,7 @@ package com.Henry.infrastructure.persistent.repository;
 import com.Henry.domain.strategy.model.entity.StrategyAwardEntity;
 import com.Henry.domain.strategy.model.entity.StrategyEntity;
 import com.Henry.domain.strategy.model.entity.StrategyRuleEntity;
+import com.Henry.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.Henry.domain.strategy.repository.IStrategyRepository;
 import com.Henry.infrastructure.persistent.dao.IStrategyAwardDao;
 import com.Henry.infrastructure.persistent.dao.IStrategyDao;
@@ -27,7 +28,7 @@ import java.util.Map;
 @Repository
 public class StrategyRepository implements IStrategyRepository {
     @Resource
-    private IStrategyAwardDao strategyAwardDAO;
+    private IStrategyAwardDao strategyAwardDao;
     @Resource
     private IRedisService redisService;
     @Resource
@@ -50,7 +51,7 @@ public class StrategyRepository implements IStrategyRepository {
             return strategyAwardEntities;
         }
         // 从数据库中获取
-        List<StrategyAward> strategyAwards = strategyAwardDAO.queryStrategyAwardListByStrategyId(strategyId);
+        List<StrategyAward> strategyAwards = strategyAwardDao.queryStrategyAwardListByStrategyId(strategyId);
         strategyAwardEntities = new ArrayList<>(strategyAwards.size());
         for (StrategyAward strategyAward : strategyAwards) {
             StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
@@ -125,6 +126,22 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
         return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    /**
+     * 查询策略奖品规则模型
+     *
+     * @param strategyId 策略ID
+     * @param awardId    奖品ID
+     * @return 策略奖品规则模型
+     */
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModels = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 
     /**

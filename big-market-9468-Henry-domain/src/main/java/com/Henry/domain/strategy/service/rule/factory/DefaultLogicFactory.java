@@ -22,6 +22,11 @@ public class DefaultLogicFactory {
 
     public Map<String, ILogicFilter<?>> logicFilterMap = new ConcurrentHashMap<>();
 
+    /**
+     * 初始化规则工厂
+     *
+     * @param logicFilters 规则过滤器
+     */
     public DefaultLogicFactory(List<ILogicFilter<?>> logicFilters) {
         logicFilters.forEach(logic -> {
             LogicStrategy strategy = AnnotationUtils.findAnnotation(logic.getClass(), LogicStrategy.class);
@@ -31,6 +36,12 @@ public class DefaultLogicFactory {
         });
     }
 
+    /**
+     * 开放规则过滤器
+     *
+     * @param <T> 泛型
+     * @return 规则过滤器
+     */
     public <T extends RuleActionEntity.RaffleEntity> Map<String, ILogicFilter<T>> openLogicFilter() {
         return (Map<String, ILogicFilter<T>>) (Map<?, ?>) logicFilterMap;
     }
@@ -39,13 +50,24 @@ public class DefaultLogicFactory {
     @AllArgsConstructor
     public enum LogicModel {
 
-        RULE_WIGHT("rule_weight","【抽奖前规则】根据抽奖权重返回可抽奖范围KEY"),
-        RULE_BLACKLIST("rule_blacklist","【抽奖前规则】黑名单规则过滤，命中黑名单则直接返回"),
+        RULE_WIGHT("rule_weight","【抽奖前规则】根据抽奖权重返回可抽奖范围KEY","before"),
+        RULE_BLACKLIST("rule_blacklist","【抽奖前规则】黑名单规则过滤，命中黑名单则直接返回","before"),
+        RULE_LOCK("rule_lock","【抽奖中规则】抽奖n次后，解锁对应奖品","center"),
+        RULE_LUCK_AWARD("rule_luck_award","【抽奖后规则】兜底奖品","after"),
 
         ;
 
         private final String code;
         private final String info;
+        private final String type;
+
+        public static boolean isCenter(String code){
+            return "center".equals(LogicModel.valueOf(code.toUpperCase()).type);
+        }
+
+        public static boolean isAfter(String code){
+            return "after".equals(LogicModel.valueOf(code.toUpperCase()).type);
+        }
 
     }
 

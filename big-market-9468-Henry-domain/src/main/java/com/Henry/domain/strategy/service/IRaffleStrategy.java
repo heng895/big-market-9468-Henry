@@ -10,7 +10,7 @@ import com.Henry.domain.strategy.model.entity.RaffleFactorEntity;
  */
 public interface IRaffleStrategy {
     /**
-     * 执行抽奖；用抽奖因子入参，执行抽奖计算，返回奖品信息
+     * 抽奖逻辑 包含前中后三个环节
      *
      * @param raffleFactorEntity 抽奖因子实体对象，根据入参信息计算抽奖结果
      * @return 抽奖的奖品

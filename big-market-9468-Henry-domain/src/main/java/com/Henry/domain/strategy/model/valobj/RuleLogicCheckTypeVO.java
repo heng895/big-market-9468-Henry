@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
- * @description 规则过滤校验类型值对象
+ * @description 放行or接管
  * @create 2024-01-06 11:10
  */
 @Getter

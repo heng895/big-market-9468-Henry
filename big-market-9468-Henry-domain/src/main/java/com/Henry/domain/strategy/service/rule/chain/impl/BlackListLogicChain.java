@@ -24,7 +24,7 @@ public class BlackListLogicChain extends AbstractLogicChain {
         log.info("抽奖责任链-黑名单开始 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
         // 查询规则值配置
         String ruleValue = strategyRepository.queryStrategyRuleValue(strategyId, ruleModel());
-        String[] splitRuleValue = ruleValue.split(Constants.COLON);
+        String[] splitRuleValue = ruleValue.split(Constants.COLON)  ;
         Integer awardId = Integer.parseInt(splitRuleValue[0]);
 
         // 黑名单抽奖判断

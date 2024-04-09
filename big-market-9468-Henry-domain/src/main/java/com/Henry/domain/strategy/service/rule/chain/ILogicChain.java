@@ -1,5 +1,7 @@
 package com.Henry.domain.strategy.service.rule.chain;
 
+import com.Henry.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+
 /**
  * @Description 责任链接口
  * @Author Henry
@@ -12,5 +14,5 @@ public interface ILogicChain extends ILogicChainArmory{
      * @param strategyId
      * @return 奖品ID
      */
-    Integer logic(String userId, Long strategyId);
+    DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId);
 }

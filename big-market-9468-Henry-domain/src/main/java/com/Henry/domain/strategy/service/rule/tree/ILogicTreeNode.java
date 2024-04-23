@@ -8,6 +8,15 @@ import com.Henry.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
  * @Date 2024/4/6
  */
 public interface ILogicTreeNode {
-    DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId);
+    /**
+     * 逻辑处理
+     *
+     * @param userId     用户ID
+     * @param strategyId 策略ID
+     * @param awardId    奖品ID
+     * @param ruleValue  规则值
+     * @return DefaultTreeFactory.TreeActionEntity
+     */
+    DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId, String ruleValue);
 
 }

@@ -33,16 +33,21 @@ public class DefaultChainFactory {
     public ILogicChain openLogicChain(Long strategyId){
         StrategyEntity strategy = strategyRepository.queryStrategyEntityByStrategyId(strategyId);
         String[] ruleModels = strategy.ruleModels();
-        if(ruleModels == null || ruleModels.length == 0){
-            return logicChainMap.get("default");
-        }
+
+        // 如果未配置策略规则，则只装填一个默认责任链
+        if (null == ruleModels || 0 == ruleModels.length) return logicChainMap.get(LogicModel.RULE_DEFAULT.getCode());
+
+        // 按照配置顺序装填用户配置的责任链；rule_blacklist、rule_weight 「注意此数据从Redis缓存中获取，如果更新库表，记得在测试阶段手动处理缓存」
         ILogicChain logicChain = logicChainMap.get(ruleModels[0]);
         ILogicChain current = logicChain;
-        for(int i = 1; i < ruleModels.length; i++){
+        for (int i = 1; i < ruleModels.length; i++) {
             ILogicChain nextChain = logicChainMap.get(ruleModels[i]);
             current = current.appendNext(nextChain);
         }
-        current.appendNext(logicChainMap.get("default"));
+
+        // 责任链的最后装填默认责任链
+        current.appendNext(logicChainMap.get(LogicModel.RULE_DEFAULT.getCode()));
+
         return logicChain;
     }
 

@@ -1,6 +1,7 @@
 package com.Henry.infrastructure.persistent.dao;
 
 import com.Henry.infrastructure.persistent.po.Strategy;
+import com.Henry.infrastructure.persistent.po.StrategyAward;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
